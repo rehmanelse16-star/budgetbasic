@@ -1,0 +1,116 @@
+{
+  "project": {
+    "name": "BudgetBasics",
+    "theme": "NextGen BudgetBee",
+    "tagline": "Learn. Plan. Grow."
+  },
+  "resources": [
+    {
+      "title": "Build a simple first budget",
+      "topic": "budgeting",
+      "description": "Start with take-home income and identify regular needs, wants, and savings.",
+      "popular": 5
+    },
+    {
+      "title": "Save before you spend",
+      "topic": "saving",
+      "description": "Set aside a manageable amount regularly and check your goal progress.",
+      "popular": 4
+    },
+    {
+      "title": "The pause-before-you-buy check",
+      "topic": "spending",
+      "description": "Ask whether a purchase is essential, useful, and planned before spending.",
+      "popular": 5
+    },
+    {
+      "title": "Watch small expenses",
+      "topic": "spending",
+      "description": "Record everyday purchases so you can see where your money goes.",
+      "popular": 3
+    },
+    {
+      "title": "Use the 50–30–20 rule as a guide",
+      "topic": "budgeting",
+      "description": "Treat the split as an educational starting point that you can adjust.",
+      "popular": 4
+    },
+    {
+      "title": "Turn a goal into monthly steps",
+      "topic": "saving",
+      "description": "Compare a target amount with current savings and a monthly contribution.",
+      "popular": 4
+    }
+  ],
+  "chatbot": {
+    "disclaimer": "BudgetBuddy provides basic educational information, not professional financial advice.",
+    "fallback": "I can help with BudgetBasics topics such as budgeting, needs vs. wants, saving, overspending, expenses, and goals."
+  },
+  "studentExample": {
+    "student": "Ali",
+    "monthlyIncome": 1000,
+    "currency": "PKR",
+    "description": "Sample student expenses for learning and demonstration.",
+    "expenses": [
+      {
+        "date": "2026-09-03",
+        "category": "Food",
+        "description": "Lunch on campus",
+        "amount": 85
+      },
+      {
+        "date": "2026-09-05",
+        "category": "Transport",
+        "description": "Bus / ride fare",
+        "amount": 60
+      },
+      {
+        "date": "2026-09-07",
+        "category": "Education",
+        "description": "Course notes and printing",
+        "amount": 75
+      },
+      {
+        "date": "2026-09-10",
+        "category": "Food",
+        "description": "Groceries",
+        "amount": 140
+      },
+      {
+        "date": "2026-09-12",
+        "category": "Entertainment",
+        "description": "Movie with friends",
+        "amount": 45
+      },
+      {
+        "date": "2026-09-15",
+        "category": "Shopping",
+        "description": "Stationery",
+        "amount": 55
+      },
+      {
+        "date": "2026-09-18",
+        "category": "Transport",
+        "description": "Monthly transport",
+        "amount": 90
+      },
+      {
+        "date": "2026-09-20",
+        "category": "Utilities",
+        "description": "Mobile / internet",
+        "amount": 80
+      },
+      {
+        "date": "2026-09-22",
+        "category": "Food",
+        "description": "Dinner",
+        "amount": 70
+      }
+    ]
+  },
+  "visitorCounter": {
+    "count": 1482,
+    "lastUpdated": "2026-09-26",
+    "status": "active"
+  }
+}
