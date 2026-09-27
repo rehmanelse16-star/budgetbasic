@@ -2346,7 +2346,7 @@ function MyCoolAppReactVite() {
       <aside className="sidebar" id="sidebar">
 
         <a className="brand" href="#overview" aria-label="BudgetBasics home" style={{ display: 'flex', alignItems: 'center' }}>
-          <img className="brand-logo-image" src="src/assets/logo.png" alt="BudgetBasics" style={{ width: '200px', height: 'auto', maxWidth: '100%' }} />
+          <img className="brand-logo-image" src="/assets/logo.png" alt="BudgetBasics" style={{ width: '200px', height: 'auto', maxWidth: '100%' }} />
         </a>
 
         <div className="workspace">
@@ -4011,7 +4011,7 @@ function MyCoolAppReactVite() {
 
               <div className="progress-track-wrapper">
                 <div className="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="60">
-                  <div className="progress-fill" id="planner-progress-fill" data-style="width: 60%;"></div>
+                  <div className="progress-fill" id="planner-progress-fill" style={{width: '60%'}}></div>
                 </div>
               </div>
             </article>
@@ -4048,14 +4048,15 @@ function MyCoolAppReactVite() {
                   </label>
 
                   <select id="expense-category">
-                    <option defaultValue="Food">Food</option>
-                    <option defaultValue="Transport">Transport</option>
-                    <option defaultValue="Bills">Bills</option>
-                    <option defaultValue="Education">Education</option>
-                    <option defaultValue="Rent">Rent</option>
-                    <option defaultValue="Shopping">Shopping</option>
-                    <option defaultValue="Entertainment">Entertainment</option>
-                    <option defaultValue="Other">Other</option>
+                    <option value="Food">Food</option>
+                    <option value="Transport">Transport</option>
+                    <option value="Bills">Bills</option>
+                    <option value="Education">Education</option>
+                    <option value="Rent">Rent</option>
+                    <option value="Shopping">Shopping</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Utilities">Utilities</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
 
@@ -4144,15 +4145,16 @@ function MyCoolAppReactVite() {
                     id="expense-filter"
                     aria-label="Filter expenses by category"
                   >
-                    <option defaultValue="all">All categories</option>
-                    <option defaultValue="Food">Food</option>
-                    <option defaultValue="Transport">Transport</option>
-                    <option defaultValue="Bills">Bills</option>
-                    <option defaultValue="Education">Education</option>
-                    <option defaultValue="Rent">Rent</option>
-                    <option defaultValue="Shopping">Shopping</option>
-                    <option defaultValue="Entertainment">Entertainment</option>
-                    <option defaultValue="Other">Other</option>
+                    <option value="all">All categories</option>
+                    <option value="Food">Food</option>
+                    <option value="Transport">Transport</option>
+                    <option value="Bills">Bills</option>
+                    <option value="Education">Education</option>
+                    <option value="Rent">Rent</option>
+                    <option value="Shopping">Shopping</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Utilities">Utilities</option>
+                    <option value="Other">Other</option>
                   </select>
 
 
@@ -4160,9 +4162,9 @@ function MyCoolAppReactVite() {
                     id="expense-sort"
                     aria-label="Sort expenses"
                   >
-                    <option defaultValue="newest">Newest first</option>
-                    <option defaultValue="highest">Highest amount</option>
-                    <option defaultValue="lowest">Lowest amount</option>
+                    <option value="newest">Newest first</option>
+                    <option value="highest">Highest amount</option>
+                    <option value="lowest">Lowest amount</option>
                   </select>
 
                 </div>
