@@ -398,7 +398,15 @@ function MyCoolAppReactVite() {
         }
 
         function roundedBar(ctx, x, y, width, height, radius) {
-          const r = Math.min(radius, height / 2);
+          if (width < 0) { x += width; width = Math.abs(width); }
+          if (height < 0) { y += height; height = Math.abs(height); }
+          const r = Math.max(0, Math.min(radius, width / 2, height / 2));
+          
+          if (r <= 0) {
+            ctx.fillRect(x, y, width, height);
+            return;
+          }
+          
           ctx.beginPath();
           ctx.moveTo(x + r, y);
           ctx.arcTo(x + width, y, x + width, y + height, r);
@@ -1328,18 +1336,19 @@ function MyCoolAppReactVite() {
         // Expense planner — Completely Independent Feature
         // ------------------------------------------------------------
 
-        let plannerIncome = 50000;
+        let plannerIncome = Number(localStorage.getItem('bb_planner_income')) || 50000;
         let editingExpenseId = null;
 
-        // Default sample expenses matching the user's requested scenario:
-        // Income = 50,000, Food = 10,000, Transport = 5,000, Bills = 8,000, Education = 7,000
-        // Total = 30,000, Remaining = 20,000
-        const expenses = [
+        const defaultExpenses = [
           { id: "exp-1", date: localISODate(), category: "Food", description: "Monthly groceries & canteen", amount: 10000 },
           { id: "exp-2", date: localISODate(), category: "Transport", description: "Campus bus & travel pass", amount: 5000 },
           { id: "exp-3", date: localISODate(), category: "Bills", description: "Mobile internet & room electricity", amount: 8000 },
           { id: "exp-4", date: localISODate(), category: "Education", description: "Semester books & course handouts", amount: 7000 }
         ];
+
+        let expenses = localStorage.getItem('bb_expenses') 
+          ? JSON.parse(localStorage.getItem('bb_expenses')) 
+          : defaultExpenses;
 
         snapshotExpenses = expenses;
         snapshotPlannerIncome = plannerIncome;
@@ -1380,6 +1389,8 @@ function MyCoolAppReactVite() {
           const percentUsed = income > 0 ? Math.round((total / income) * 100) : 0;
           snapshotPlannerIncome = income;
           snapshotExpenses = expenses;
+          localStorage.setItem('bb_planner_income', income);
+          localStorage.setItem('bb_expenses', JSON.stringify(expenses));
           renderVisualCharts();
 
           const incomeElement = $("#expense-income");
@@ -1581,13 +1592,7 @@ function MyCoolAppReactVite() {
         $("#cancel-edit")?.addEventListener("click", resetExpenseForm);
 
         $("#reset-expenses")?.addEventListener("click", () => {
-          expenses.length = 0;
-          expenses.push(
-            { id: "exp-1", date: localISODate(), category: "Food", description: "Monthly groceries & canteen", amount: 10000 },
-            { id: "exp-2", date: localISODate(), category: "Transport", description: "Campus bus & travel pass", amount: 5000 },
-            { id: "exp-3", date: localISODate(), category: "Bills", description: "Mobile internet & room electricity", amount: 8000 },
-            { id: "exp-4", date: localISODate(), category: "Education", description: "Semester books & course handouts", amount: 7000 }
-          );
+          expenses = [...defaultExpenses];
           plannerIncome = 50000;
           const incomeInput = $("#planner-income-input");
           if (incomeInput) incomeInput.value = "50000";
@@ -3319,7 +3324,7 @@ function MyCoolAppReactVite() {
                       <input
                         type="radio"
                         name="quiz-fixed"
-                        defaultValue="wrong"
+                        value="wrong"
                         required
                       />
                       An occasional cinema ticket
@@ -3329,7 +3334,7 @@ function MyCoolAppReactVite() {
                       <input
                         type="radio"
                         name="quiz-fixed"
-                        defaultValue="right"
+                        value="right"
                       />
                       Your monthly rent
                     </label>
@@ -3347,7 +3352,7 @@ function MyCoolAppReactVite() {
                       <input
                         type="radio"
                         name="quiz-savings"
-                        defaultValue="right"
+                        value="right"
                         required
                       />
                       Put aside a manageable amount regularly
@@ -3357,7 +3362,7 @@ function MyCoolAppReactVite() {
                       <input
                         type="radio"
                         name="quiz-savings"
-                        defaultValue="wrong"
+                        value="wrong"
                       />
                       Wait until you earn much more
                     </label>
@@ -3531,48 +3536,48 @@ function MyCoolAppReactVite() {
                   <div className="budget-option-row">
                     <div><strong>Food</strong><span>Choose one plan</span></div>
                     <div className="budget-choice-group">
-                      <label><input type="radio" name="budget-food" defaultValue="7000" data-label="Home cooking" /> Home cooking <b>Rs. 7,000</b></label>
-                      <label><input type="radio" name="budget-food" defaultValue="12000" data-label="Frequent takeout" /> Frequent takeout <b>Rs. 12,000</b></label>
+                      <label><input type="radio" name="budget-food" value="7000" data-label="Home cooking" /> Home cooking <b>Rs. 7,000</b></label>
+                      <label><input type="radio" name="budget-food" value="12000" data-label="Frequent takeout" /> Frequent takeout <b>Rs. 12,000</b></label>
                     </div>
                   </div>
 
                   <div className="budget-option-row">
                     <div><strong>Transport</strong><span>Choose one plan</span></div>
                     <div className="budget-choice-group">
-                      <label><input type="radio" name="budget-transport" defaultValue="4000" data-label="Public transport" /> Public transport <b>Rs. 4,000</b></label>
-                      <label><input type="radio" name="budget-transport" defaultValue="8000" data-label="Ride-hailing" /> Ride-hailing <b>Rs. 8,000</b></label>
+                      <label><input type="radio" name="budget-transport" value="4000" data-label="Public transport" /> Public transport <b>Rs. 4,000</b></label>
+                      <label><input type="radio" name="budget-transport" value="8000" data-label="Ride-hailing" /> Ride-hailing <b>Rs. 8,000</b></label>
                     </div>
                   </div>
 
                   <div className="budget-option-row">
                     <div><strong>Education</strong><span>Choose one plan</span></div>
                     <div className="budget-choice-group">
-                      <label><input type="radio" name="budget-education" defaultValue="5000" data-label="Required study costs" /> Required study costs <b>Rs. 5,000</b></label>
-                      <label><input type="radio" name="budget-education" defaultValue="9000" data-label="Extra study purchases" /> Extra study purchases <b>Rs. 9,000</b></label>
+                      <label><input type="radio" name="budget-education" value="5000" data-label="Required study costs" /> Required study costs <b>Rs. 5,000</b></label>
+                      <label><input type="radio" name="budget-education" value="9000" data-label="Extra study purchases" /> Extra study purchases <b>Rs. 9,000</b></label>
                     </div>
                   </div>
 
                   <div className="budget-option-row">
                     <div><strong>Entertainment</strong><span>Choose one plan</span></div>
                     <div className="budget-choice-group">
-                      <label><input type="radio" name="budget-entertainment" defaultValue="2500" data-label="Simple activities" /> Simple activities <b>Rs. 2,500</b></label>
-                      <label><input type="radio" name="budget-entertainment" defaultValue="9000" data-label="Premium outings" /> Premium outings <b>Rs. 9,000</b></label>
+                      <label><input type="radio" name="budget-entertainment" value="2500" data-label="Simple activities" /> Simple activities <b>Rs. 2,500</b></label>
+                      <label><input type="radio" name="budget-entertainment" value="9000" data-label="Premium outings" /> Premium outings <b>Rs. 9,000</b></label>
                     </div>
                   </div>
 
                   <div className="budget-option-row">
                     <div><strong>Shopping</strong><span>Choose one plan</span></div>
                     <div className="budget-choice-group">
-                      <label><input type="radio" name="budget-shopping" defaultValue="2000" data-label="Planned basics" /> Planned basics <b>Rs. 2,000</b></label>
-                      <label><input type="radio" name="budget-shopping" defaultValue="7000" data-label="Impulse shopping" /> Impulse shopping <b>Rs. 7,000</b></label>
+                      <label><input type="radio" name="budget-shopping" value="2000" data-label="Planned basics" /> Planned basics <b>Rs. 2,000</b></label>
+                      <label><input type="radio" name="budget-shopping" value="7000" data-label="Impulse shopping" /> Impulse shopping <b>Rs. 7,000</b></label>
                     </div>
                   </div>
 
                   <div className="budget-option-row">
                     <div><strong>Bills</strong><span>Choose one plan</span></div>
                     <div className="budget-choice-group">
-                      <label><input type="radio" name="budget-bills" defaultValue="7000" data-label="Essential bills" /> Essential bills <b>Rs. 7,000</b></label>
-                      <label><input type="radio" name="budget-bills" defaultValue="11000" data-label="Higher monthly bills" /> Higher monthly bills <b>Rs. 11,000</b></label>
+                      <label><input type="radio" name="budget-bills" value="7000" data-label="Essential bills" /> Essential bills <b>Rs. 7,000</b></label>
+                      <label><input type="radio" name="budget-bills" value="11000" data-label="Higher monthly bills" /> Higher monthly bills <b>Rs. 11,000</b></label>
                     </div>
                   </div>
                 </div>
@@ -4290,10 +4295,10 @@ function MyCoolAppReactVite() {
                   id="topic-filter"
                   aria-label="Filter resources by topic"
                 >
-                  <option defaultValue="all">All topics</option>
-                  <option defaultValue="budgeting">Budgeting</option>
-                  <option defaultValue="saving">Saving</option>
-                  <option defaultValue="spending">Spending</option>
+                  <option value="all">All topics</option>
+                  <option value="budgeting">Budgeting</option>
+                  <option value="saving">Saving</option>
+                  <option value="spending">Spending</option>
                 </select>
 
 
@@ -4301,8 +4306,8 @@ function MyCoolAppReactVite() {
                   id="resource-sort"
                   aria-label="Sort resources"
                 >
-                  <option defaultValue="popular">Most popular</option>
-                  <option defaultValue="title">Title A-Z</option>
+                  <option value="popular">Most popular</option>
+                  <option value="title">Title A-Z</option>
                 </select>
 
               </div>
@@ -4437,7 +4442,7 @@ function MyCoolAppReactVite() {
                 <span className="icon-tile purple"><i className="icon fa-solid fa-message" aria-hidden="true"></i></span>
                 <h2>Share your thoughts</h2>
                 <p className="muted">The form follows the SRS requirement for name, email, rating, and comments.</p>
-                <form id="feedback-form" className="stacked-form" novalidate>
+                <form id="feedback-form" className="stacked-form" noValidate>
                   <div className="form-group">
                     <label htmlFor="feedback-name">Your Full Name <span className="required-star">*</span></label>
                     <input id="feedback-name" type="text" maxLength="60" required={true} placeholder="e.g. Bilal Ahmed" />
@@ -4740,7 +4745,7 @@ function MyCoolAppReactVite() {
                   <span className="badge gold-badge"><i className="icon fa-solid fa-paper-plane" aria-hidden="true"></i> Direct</span>
                 </div>
 
-                <form id="contact-form" className="stacked-form" novalidate>
+                <form id="contact-form" className="stacked-form" noValidate>
                   <div className="form-group">
                     <label htmlFor="contact-name">Your Full Name <span className="required-star">*</span></label>
                     <input id="contact-name" type="text" maxLength="60" required={true} placeholder="e.g. Ayesha Khan" />
